@@ -63,6 +63,7 @@ while True:
     if first_hand and player_score == 21:
         print('Blackjack')
         break
+    first_hand = False
     if player_score > 21:
         print('You busted!')
         break
