@@ -1,11 +1,58 @@
 import random
+import os
+
+
+def calc_hand(hand):
+    sum = 0
+    non_aces = [card for card in hand if card != 'A']
+    aces = [card for card in hand if card == 'A']
+    for card in non_aces:
+        if card in 'JQK':
+            sum += 10
+        else:
+            sum += int(card)
+    for card in aces:
+        if sum <= 10:
+            sum += 11
+        else:
+            sum += 1
+
+    return sum
+
 
 cards = [
-    '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', '10h', 'Jh', 'Qh', 'Kh',
-    'Ah', '2d', '3d', '4d', '5d', '6d', '7d', '8d', '9d', '10d', 'Jd', 'Qd',
-    'Kd', 'Ad', '2c', '3c', '4c', '5c', '6c', '7c', '8c', '9c', '10c', 'Jc',
-    'Qc', 'Kc', 'Ac', '2s', '3s', '4s', '5s', '6s', '7s', '8s', '9s', '10s',
-    'Js', 'Qs', 'Ks', 'As',
+    '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A',
+    '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A',
+    '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A',
+    '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A',
 ]
 
 random.shuffle(cards)
+
+player = []
+dealer = []
+
+player.append(cards.pop())
+dealer.append(cards.pop())
+player.append(cards.pop())
+dealer.append(cards.pop())
+
+while True:
+    os.system('cls' if os.name == 'nt' else 'clear')
+    player_score = calc_hand(player)
+    dealer_score = calc_hand(dealer)
+    print('Dealer Cards: [{}][?]'.format(dealer[0]))
+    print('Your Cards: [{}] ({})'.format(']['.join(player), player_score))
+    print('')
+    print('What would you like to do?')
+    print('[1]  Hit')
+    print('[2]  Stand')
+    print('')
+    choice = input('Your Choice: ')
+    print('')
+    if choice == '1':
+        player.append(cards.pop())
+    elif choice == '2':
+        while calc_hand(dealer) <= 16:
+            dealer.append(cards.pop())
+            
