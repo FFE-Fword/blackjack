@@ -37,13 +37,35 @@ dealer.append(cards.pop())
 player.append(cards.pop())
 dealer.append(cards.pop())
 
+standing = False
+first_hand = True
+
 while True:
     os.system('cls' if os.name == 'nt' else 'clear')
     player_score = calc_hand(player)
     dealer_score = calc_hand(dealer)
-    print('Dealer Cards: [{}][?]'.format(dealer[0]))
-    print('Your Cards: [{}] ({})'.format(']['.join(player), player_score))
+    if standing:
+        print('Dealer Cards: [{}][{}]'.format(']['.join(dealer), dealer_score))
+    else:
+        print('Dealer Cards: [{}][?]'.format(dealer[0]))
+        print('Your Cards: [{}] ({})'.format(']['.join(player), player_score))
     print('')
+    if standing:
+        if dealer_score > 21:
+            print('Dealer busted. You WIN!')
+        elif player_score == dealer_score:
+            print('Push, nobody wins or loses.')
+        elif player_score > dealer_score:
+            print('You beat the dealer. You WIN!')
+        else:
+            print('You lose.')
+        break
+    if first_hand and player_score == 21:
+        print('Blackjack')
+        break
+    if player_score > 21:
+        print('You busted!')
+        break
     print('What would you like to do?')
     print('[1]  Hit')
     print('[2]  Stand')
@@ -53,6 +75,7 @@ while True:
     if choice == '1':
         player.append(cards.pop())
     elif choice == '2':
+        standing = True
         while calc_hand(dealer) <= 16:
             dealer.append(cards.pop())
-            
+
