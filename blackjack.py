@@ -48,7 +48,7 @@ while True:
         print('Dealer Cards: [{}][{}]'.format(']['.join(dealer), dealer_score))
     else:
         print('Dealer Cards: [{}][?]'.format(dealer[0]))
-        print('Your Cards: [{}] ({})'.format(']['.join(player), player_score))
+    print('Your Cards: [{}] ({})'.format(']['.join(player), player_score))
     print('')
     if standing:
         if dealer_score > 21:
@@ -78,4 +78,3 @@ while True:
         standing = True
         while calc_hand(dealer) <= 16:
             dealer.append(cards.pop())
-
